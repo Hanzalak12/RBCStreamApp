@@ -29,7 +29,7 @@ import { WebView } from 'react-native-webview';
 
 const App: () => React$Node = () => {
   return (
-    <WebView style={{marginTop:40}} source={{ uri: 'https://rbcstream.com/' }} />
+    <WebView style={{marginTop:'auto'}} source={{ uri: 'https://rbcstream.com/' }} />
   );
 };
 

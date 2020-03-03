@@ -6,7 +6,7 @@
  * @flow
  */
 
-import React from 'react';
+import React,{Component} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -14,6 +14,7 @@ import {
   View,
   Text,
   StatusBar,
+  FlatList
 } from 'react-native';
 
 import {
@@ -24,13 +25,43 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-
+import axios from 'axios'
 import { WebView } from 'react-native-webview';
 
-const App: () => React$Node = () => {
+export class  App extends Component {
+  
+  constructor(props) {
+    super(props);
+    this.state = {
+        result: ""
+    };
+    this.getMoviesFromApiAsync();
+}
+
+getMoviesFromApiAsync = () => {
+
+axios({
+  method: 'GET',
+  url: "https://raw.githubusercontent.com/Hanzalak12/RBCStreamApp/master/data.json",
+})
+  .then((response) => {
+      console.log(response);      
+
+       this.setState({ result: response.data.URL });
+       console.log(this.state.result);    
+  })
+  .catch((error) => {
+      console.log(error);
+  });
+
+}
+
+  render(){
   return (
-    <WebView style={{marginTop:'auto'}} source={{ uri: 'https://rbcstream.com/' }} />
+    // <FlatList data={this.state.result}  />
+    <WebView style={{marginTop:'auto'}} source={{ uri: this.state.result }} />
   );
+  }
 };
 
 const styles = StyleSheet.create({
